@@ -39,10 +39,11 @@ void UGrabber::Grab()
 
 	if (GrabActor)
 	{
-		PhysicsHandle->GrabComponentAtLocation(
+		PhysicsHandle->GrabComponentAtLocationWithRotation(
 			GrabComponent,
 			NAME_None,
-			GrabComponent->GetOwner()->GetActorLocation()
+			GrabActor->GetActorLocation(),
+			GrabActor->GetActorRotation()
 		);
 	}
 }

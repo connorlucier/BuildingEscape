@@ -20,7 +20,7 @@ public:
 	void Release();
 	void AttachPhysicsHandle();
 	void SetInputComponent();
-
+	
 	FHitResult GetFirstPhysicsBodyInReach();
 
 protected:
@@ -29,5 +29,5 @@ protected:
 private:
 	UPhysicsHandleComponent* PhysicsHandle = nullptr;
 	UInputComponent* Input = nullptr;
-	float Reach = 100.f;
+	float Reach = 150.f;
 };
