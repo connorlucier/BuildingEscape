@@ -6,6 +6,7 @@
 #include "Runtime/Engine/Classes/Engine/TriggerVolume.h"
 #include "DoorOpener.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDoorRequest);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BUILDINGESCAPE_API UDoorOpener : public UActorComponent
@@ -13,17 +14,21 @@ class BUILDINGESCAPE_API UDoorOpener : public UActorComponent
 	GENERATED_BODY()
 
 public:	
-	// Sets default values for this component's properties
 	UDoorOpener();
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
+	bool AllPlatesTriggered() const;
+
+	UPROPERTY(BlueprintAssignable)
+	FDoorRequest OpenDoor;
+
+	UPROPERTY(BlueprintAssignable)
+	FDoorRequest CloseDoor;
 
 protected:
 	virtual void BeginPlay() override;
 
 private:
-	UPROPERTY(EditAnywhere)
-	float DoorOpenAngle = -90.f;
-
 	UPROPERTY(EditAnywhere)
 	TArray<AActor*> PressurePlates = TArray<AActor*>();
 };

@@ -7,8 +7,6 @@
 UDoorOpener::UDoorOpener()
 {
 	PrimaryComponentTick.bCanEverTick = true;
-
-	// ...
 }
 
 void UDoorOpener::BeginPlay()
@@ -20,20 +18,26 @@ void UDoorOpener::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	bool bAllPlatesTriggered = true;
+	if (AllPlatesTriggered())
+	{
+		OpenDoor.Broadcast();
+	}
+	else
+	{
+		CloseDoor.Broadcast();
+	}
+}
+
+bool UDoorOpener::AllPlatesTriggered() const
+{
 	for (auto Plate : PressurePlates)
 	{
-		assert(Plate);
-
-		if (!Plate->FindComponentByClass<UPressurePlate>()->IsPlateTriggered())
+		if (Plate && !Plate->FindComponentByClass<UPressurePlate>()->IsPlateTriggered())
 		{
-			bAllPlatesTriggered = false;
+			return false;
 		}
 	}
 
-	if (bAllPlatesTriggered)
-	{
-		GetOwner()->SetActorRotation(FRotator(0.f, DoorOpenAngle, 0.f));
-	}
+	return true;
 }
 

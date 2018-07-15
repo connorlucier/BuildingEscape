@@ -24,7 +24,7 @@ protected:
 
 private:
 	UPROPERTY(EditAnywhere)
-	float MassToTriggerPlate = 50.f;
+	float TriggerMass = 50.f;
 
 	UPROPERTY(EditAnywhere)
 	ATriggerVolume* PlateTrigger = nullptr;

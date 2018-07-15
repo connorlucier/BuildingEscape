@@ -40,6 +40,6 @@ void UPressurePlate::UpdatePressurePlateTrigger()
 
 bool UPressurePlate::IsPlateTriggered()
 {
-	return (MassCurrentlyOnPlate >= MassToTriggerPlate);
+	return (MassCurrentlyOnPlate >= TriggerMass);
 }
 
