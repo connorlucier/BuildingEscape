@@ -21,7 +21,8 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	if (PhysicsHandle->GrabbedComponent) {
+	if (PhysicsHandle && PhysicsHandle->GrabbedComponent)
+	{
 		FVector PlayerViewLocation, LineTraceEnd;
 		FRotator PlayerViewRotation;
 		
@@ -37,7 +38,7 @@ void UGrabber::Grab()
 	auto GrabActor = HitResult.GetActor();
 	auto GrabComponent = HitResult.GetComponent();
 
-	if (GrabActor)
+	if (GrabActor && GrabComponent)
 	{
 		PhysicsHandle->GrabComponentAtLocationWithRotation(
 			GrabComponent,
@@ -50,22 +51,35 @@ void UGrabber::Grab()
 
 void UGrabber::Release()
 {
-	PhysicsHandle->ReleaseComponent();
+	if (PhysicsHandle)
+	{
+		PhysicsHandle->ReleaseComponent();
+	}
 }
 
 void UGrabber::AttachPhysicsHandle()
 {
 	PhysicsHandle = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
-	assert(PhysicsHandle);
+
+	if (!PhysicsHandle)
+	{
+		UE_LOG(LogCore, Error, TEXT("%s missing physics handle component."), *GetOwner()->GetName())
+	}
 }
 
 void UGrabber::SetInputComponent()
 {
 	Input = GetOwner()->FindComponentByClass<UInputComponent>();
-	assert(Input);
 
-	Input->BindAction("Grab", IE_Pressed, this, &UGrabber::Grab);
-	Input->BindAction("Grab", IE_Released, this, &UGrabber::Release);
+	if (Input)
+	{
+		Input->BindAction("Grab", IE_Pressed, this, &UGrabber::Grab);
+		Input->BindAction("Grab", IE_Released, this, &UGrabber::Release);
+	}
+	else
+	{
+		UE_LOG(LogCore, Error, TEXT("%s missing physics handle component."), *GetOwner()->GetName())
+	}
 }
 
 FHitResult UGrabber::GetFirstPhysicsBodyInReach()
