@@ -1,8 +1,6 @@
 // Copyright Connor Lucier 2018
 
 #include "DoorOpener.h"
-#include "PressurePlate.h"
-#include "assert.h"
 
 UDoorOpener::UDoorOpener()
 {
@@ -38,6 +36,6 @@ bool UDoorOpener::AllPlatesTriggered() const
 		}
 	}
 
-	return true;
+	return (PressurePlates.Num() > 0);
 }
 

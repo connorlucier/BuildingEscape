@@ -16,6 +16,15 @@ void UPressurePlate::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 	UpdatePressurePlateTrigger();
+
+	if (IsPlateTriggered())
+	{
+		OffsetPlate.Broadcast();
+	}
+	else
+	{
+		RevertPlate.Broadcast();
+	}
 }
 
 void UPressurePlate::UpdatePressurePlateTrigger()
@@ -23,10 +32,10 @@ void UPressurePlate::UpdatePressurePlateTrigger()
 	if (PlateTrigger)
 	{
 		float TotalMassOnPlate = 0.f;
-		TArray<AActor*> OverlappingActors;
-		PlateTrigger->GetOverlappingActors(OverlappingActors);
+		TArray<AActor*> ActorsInTriggerVolume;
+		PlateTrigger->GetOverlappingActors(ActorsInTriggerVolume);
 
-		for (const auto* Actor : OverlappingActors)
+		for (const auto* Actor : ActorsInTriggerVolume)
 		{
 			if (Actor)
 			{
@@ -38,8 +47,7 @@ void UPressurePlate::UpdatePressurePlateTrigger()
 	}
 }
 
-bool UPressurePlate::IsPlateTriggered()
+bool UPressurePlate::IsPlateTriggered() const
 {
 	return (MassCurrentlyOnPlate >= TriggerMass);
 }
-

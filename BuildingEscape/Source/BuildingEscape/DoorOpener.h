@@ -3,6 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "assert.h"
+#include "PressurePlate.h"
 #include "Runtime/Engine/Classes/Engine/TriggerVolume.h"
 #include "DoorOpener.generated.h"
 

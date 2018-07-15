@@ -1,8 +1,5 @@
 // Copyright Connor Lucier 2018
 #include "Grabber.h"
-#include "assert.h"
-#include "Engine/World.h"
-#include "Runtime/Engine/Classes/Components/PrimitiveComponent.h"
 
 UGrabber::UGrabber()
 {

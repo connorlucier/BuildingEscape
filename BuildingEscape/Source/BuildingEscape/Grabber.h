@@ -3,8 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "assert.h"
 #include "Components/InputComponent.h"
+#include "Engine/World.h"
 #include "PhysicsEngine/PhysicsHandleComponent.h"
+#include "Runtime/Engine/Classes/Components/PrimitiveComponent.h"
 #include "Grabber.generated.h"
 
 
